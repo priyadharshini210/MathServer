@@ -1,5 +1,5 @@
 # Ex.05 Design a Website for Server Side Processing
-## Date: 03/04/2024
+## Date: 06/04/2024
 
 ## AIM:
 To design a website to find surface area of a Right Cylinder in server side.
@@ -32,66 +32,63 @@ Publish the website in the given URL.
 ## PROGRAM :
 math.html
 ```
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-<title>AREA OF RECTANGLE</title>
+<title>Area of Surface</title>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <style type="text/css">
-body 
-{
-background-color:gray;
+body {
+    background-color: rgb(79, 166, 216);
 }
 .edge {
-width: 1440px;
-margin-left: auto;
-margin-right: auto;
-padding-top: 200px;
-padding-left: 500px;
+    width: 100%;
+    padding-top: 200px;
+    text-align: center;
 }
 .box {
-display:block;
-border: Thick dashed aquamarine;
-width: 500px;
-min-height: 300px;
-font-size: 20px;
-background-color:beige;
+    display: inline-block;
+    border: thick dashed rgb(191, 54, 212);
+    width: 500px;
+    min-height: 300px;
+    font-size: 15px;
+    background-color: rgb(90, 139, 30);
 }
-.formelt{
-color:rgb(255,0,179);
-text-align: center;
-margin-top: 7px;
-margin-bottom: 6px;
+.formelt {
+    color: rgb(19, 30, 32);
+    text-align: center;
+    margin-top: 9px;
+    margin-bottom: 8px;
 }
-h1
-{
-color:rgb(255, 0, 179);
-text-align: center;
-padding-top: 20px;
+h1 {
+    color: rgb(130, 63, 63);
+    padding-top: 20px;
 }
 </style>
 </head>
 <body>
 <div class="edge">
-<div class="box">
-<h1>AREA OF A RECTANGLE</h1>
-<form method="POST">
-{% csrf_token %}
-<div class="formelt">
-Base edge : <input type="text" name="length" value="{{l}}"></input>(in m)<br/>
-</div>
-<div class="formelt">
-Height : <input type="text" name="breadth" value="{{b}}"></input>(in m)<br/>
-</div>
-<div class="formelt">
-<input type="submit" value="Calculate"></input><br/>
-</div>
-<div class="formelt">
-Area : <input type="text" name="area" value="{{area}}"></input>m<sup>2</sup><br/>
-</div>
-</form>
-</div>
+    <div class="box">
+        <h1>Surface Area Of Right Cylinder</h1>
+        <h1>Priyadharshini.P (212223240128)</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="formelt">
+                Radius: <input type="text" name="radius" value="{{r}}">m<br/>
+            </div>
+            <div class="formelt">
+                Height: <input type="text" name="height" value="{{h}}">m<br/>
+            </div>
+            <div class="formelt">
+                <input type="submit" value="Calculate"><br/>
+            </div>
+            <div class="formelt">
+                Area: <input type="text" name="area" value="{{area}}">m<sup>2</sup><br/>
+            </div>
+        </form>
+    </div>
 </div>
 </body>
 </html>
@@ -99,24 +96,32 @@ Area : <input type="text" name="area" value="{{area}}"></input>m<sup>2</sup><br/
 views.py
 ```
 from django.shortcuts import render
-def rectarea(request):
-    context={}
+
+def surfacearea(request):
+    context = {}
     context['area'] = "0"
-    context['l'] = "0"
-    context['b'] = "0"
+    context['r'] = "0"
+    context['h'] = "0"
+    
     if request.method == 'POST':
         print("POST method is used")
-        l = request.POST.get('length','0')
-        b = request.POST.get('breadth','0')
-        print('request=',request)
-        print('Length=',l)
-        print('Breadth=',b)
-        area = int(l) * int(b)
+        
+        print('request.POST:', request.POST)
+        
+        r = request.POST.get('radius', '0') 
+        h = request.POST.get('height', '0') 
+        print('radius =', r)
+        print('height =', h)
+        
+        area = 2 * 3.14 * int(r) * int(h) + 2*3.14*int(r)*int(r)
         context['area'] = area
-        context['l'] = l
-        context['b'] = b
-        print('Area=',area)
-    return render(request,'mathapp/math.html',context)
+        context['r'] = r
+        context['h'] = h
+        print('Area =', area)
+    
+    return render(request, 'mathapp/math.html', context)
+
+
 ```
 urls.py
 ```
@@ -125,17 +130,18 @@ from django.urls import path
 from mathapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('areaofrectangle/',views.rectarea,name="areaofrectangle"),
-    path('',views.rectarea,name="areaofrectangleroot")
+    path('areaofsurface/',views.surfacearea,name="areaofsurface"),
+    path('',views.surfacearea,name="areaofsurfaceroot")
 ]
 ```
 
 
 ## SERVER SIDE PROCESSING:
-![Screenshot (12)](https://github.com/priyadharshini210/MathServer/assets/148514638/b5339b05-bc8a-47a1-b6b7-6ac22493e09d)
+![image](https://github.com/priyadharshini210/MathServer/assets/148514638/d2add300-32f0-4c97-8e4a-89b0b96d55ff)
 
 ## HOMEPAGE:
-![Screenshot (13)](https://github.com/priyadharshini210/MathServer/assets/148514638/f074d6ab-28e6-435c-9a3c-22c6f7c728c9)
+![image](https://github.com/priyadharshini210/MathServer/assets/148514638/e3da52fa-40f7-4cae-b293-caf0164266be)
+
 
 ## RESULT:
 The program for performing server side processing is completed successfully.
